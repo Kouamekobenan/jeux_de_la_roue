@@ -103,17 +103,20 @@ export default function Home() {
 
         {/* Affichage du résultat */}
         {selectedName && !spinning && (
-          <p className="mt-4 text-2xl font-bold text-black">
+          <p className="mt-4 text-xl font-bold text-black">
             🎉 Le gagnant est : {selectedName} !
           </p>
         )}
 
         {gameResult && (
-          <p className="flex flex-col justify-center rounded text-2xl font-bold absolute border top-52 p-2 bg-blue-950 h-[100px]">
+          <p
+            className="flex flex-col justify-center rounded text-2xl shadow-2xl font-bold 
+          absolute border top-52 p-2 bg-blue-950 h-[100px]"
+          >
             {gameResult === "win" ? (
               <span className="win">🎉 Félicitation vous avez gagné...!</span>
             ) : (
-              <span className="failed"> Désolé, tu as perdu...</span>
+              <span className="failed"> Désolé, vous-avez tapez poto...!</span>
             )}
           </p>
         )}
