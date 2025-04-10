@@ -61,26 +61,34 @@ export default function Home() {
           <h2 className="text-lg font-bold mb-2 text-blue-600 ">
             Choisir un participant... :
           </h2>
-          <select
-            onChange={(e) => setPlayerChoice(e.target.value)}
-            value={playerChoice || ""}
-            className="border p-2 rounded text-black w-full"
-          >
-            <option value="" disabled>
-              Choisir un participant
-            </option>
-            {names.map((name, index) => (
-              <option key={index} value={name}>
-                {name}
+          <div className="flex gap-1">
+            <select
+              onChange={(e) => setPlayerChoice(e.target.value)}
+              value={playerChoice || ""}
+              className="border p-2 rounded text-black w-full"
+            >
+              <option value="" disabled>
+                Choisir un participant
               </option>
-            ))}
-          </select>
+              {names.map((name, index) => (
+                <option key={index} value={name}>
+                  {name}
+                </option>
+              ))}
+            </select>
+            <button
+              onClick={() => window.location.reload()}
+              className="bg-red-600  rounded-sm cursor-pointer p-1"
+            >
+              réjouer...!
+            </button>
+          </div>
         </div>
 
         {/* La roue */}
-        <div className="relative w-60 h-60 md:w-80 md:h-80 md:mb-6 bg-gray-700 rounded-sm">
+        <div className="relative  h-60 md:w-80 md:h-80 md:mb-6 bg-gray-700 rounded-sm">
           <motion.div
-            className="absolute rounded-full border-4 border-black w-full h-full flex items-center justify-center text-center"
+            className="absolute rounded-full border-8 border-black w-full h-full flex items-center justify-center text-center"
             animate={{ rotate: rotation }} // Applique la rotation
             transition={{ duration: 4, ease: "easeOut" }} // Contrôle la durée et l'animation
             style={{
@@ -90,28 +98,13 @@ export default function Home() {
           >
             {/* Suppression des noms sur la roue */}
           </motion.div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 cursor-pointer -translate-y-[90%] text-3xl">
-            🔽
-          </div>
-        </div>
-        <div className=" flex flex-col ">
-          {/* Bouton pour faire tourner la roue */}
           <button
             onClick={spinWheel}
             disabled={spinning || !playerChoice} // on empêche le clic si ça tourne OU si rien n'est choisi
-            className={`mb-4 p-1 rounded-sm cursor-pointer ${
-              spinning || !playerChoice
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-blue-600"
-            }`}
+            className="absolute top-1/2 left-1/2 border-2 bg-white p-4
+             border-black rounded-full transform -translate-x-1/2 cursor-pointer -translate-y-[90%] text-3xl"
           >
-            {spinning ? "Spinning..." : "Tourné la roue...!"}
-          </button>
-          <button
-            onClick={() => window.location.reload()}
-            className="bg-red-600  rounded-sm cursor-pointer p-1"
-          >
-            rejouer...!
+            🔽
           </button>
         </div>
 
@@ -125,12 +118,17 @@ export default function Home() {
         {gameResult && (
           <p
             className="flex flex-col justify-center rounded text-2xl shadow-2xl font-bold 
-          absolute border top-52 p-2 bg-blue-950 h-[100px]"
+          absolute border top-36 p-2 bg-blue-950 h-[100px]"
           >
             {gameResult === "win" ? (
-              <span className="win">🎉 Félicitation vous avez gagné...!</span>
+              <span className="win text-white">
+                🎉 Félicitation vous avez gagné...!
+              </span>
             ) : (
-              <span className="failed"> Désolé, vous-avez tapez poto...!</span>
+              <span className="failed text-white">
+                {" "}
+                Désolé, vous-avez tapez poto...!
+              </span>
             )}
           </p>
         )}
