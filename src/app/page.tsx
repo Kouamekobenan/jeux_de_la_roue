@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { NAMES as initialNames } from "./data/data"; // Liste des participants
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function Home() {
   const [selectedName, setSelectedName] = useState<string | null>(null);
@@ -11,6 +13,7 @@ export default function Home() {
   const [playerChoice, setPlayerChoice] = useState<string | null>(null); // Nom choisi par le joueur
   const [gameResult, setGameResult] = useState<string | null>(null); // Résultat du jeu : "win" ou "lose"
   const [names, setNames] = useState(initialNames);
+  const router = useRouter();
 
   // Fonction pour faire tourner la roue
   const spinWheel = () => {
@@ -33,6 +36,9 @@ export default function Home() {
       // Vérifier si le joueur a choisi le bon nom
       if (playerChoice === winner) {
         setGameResult("win"); // Le joueur a gagné
+        setTimeout(() => {
+          router.push("/register");
+        }, 2000);
       } else {
         setGameResult("lose"); // Le joueur a perdu
       }
@@ -40,9 +46,17 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen p-2 flex flex-col md:items-center md:justify-center bg-gray-800 md:p-8">
+    <div className="min-h-screen p-2 flex flex-col md:items-center md:justify-center bg-gray-800 md:p-2">
       {/* Sélection du nom par le joueur */}
       <div className="bg-gray-100 p-5 rounded-sm">
+        <div className="">
+          <Image
+            src="/istockphoto-1367581899-1024x1024.jpg" // chemin relatif depuis /public
+            alt="Photo 1"
+            width={320}
+            height={100}
+          />
+        </div>
         <div className="mb-4">
           <h2 className="text-lg font-bold mb-2 text-blue-600 ">
             Choisir un participant... :
@@ -64,7 +78,7 @@ export default function Home() {
         </div>
 
         {/* La roue */}
-        <div className="relative w-60 h-72 md:w-72 md:h-72 md:mb-6 bg-gray-700 rounded-sm">
+        <div className="relative w-60 h-60 md:w-80 md:h-80 md:mb-6 bg-gray-700 rounded-sm">
           <motion.div
             className="absolute rounded-full border-4 border-black w-full h-full flex items-center justify-center text-center"
             animate={{ rotate: rotation }} // Applique la rotation
